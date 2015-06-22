@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
 
+  enum user_type: [ :student, :master, :admin ]
   serialize :auth_hash, JSON
 
   def self.create_with_omniauth(auth)
