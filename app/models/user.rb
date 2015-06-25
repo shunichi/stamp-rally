@@ -31,6 +31,10 @@ class User < ActiveRecord::Base
     stamps.find_by(master: master)
   end
 
+  def stamp_completed?
+    stamps.count == Stamp.max_count
+  end
+
   def start_rally
     unless rally_started?
       self.rally_started_at = Time.current
@@ -49,6 +53,26 @@ class User < ActiveRecord::Base
 仲間に入れてもいいと思ったらスタンプを押してくださいね！
 #{Rails.application.routes.url_helpers.user_url(self)}
 EOS
-    result = Remotty::Group.new(self.token, id: ENV['REMOTTY_GROUP_ID']).post_entry(message)
+    response = Remotty::Group.new(self.token, id: ENV['REMOTTY_GROUP_ID']).post_entry(message)
+    self.update(remotty_entry_id: response['entry']['id'])
+  end
+
+  def post_stamp_creation_to_remotty(stamp)
+    message = <<EOS
+#{self.name} がスタンプを押しました。
+
+スタンプが#{stamp.user.stamps.count}/#(Stamp.max_count)個集まりました。
+EOS
+    Remotty::Group.new(self.token, id: ENV['REMOTTY_GROUP_ID']).post_entry(message, stamp.user.remotty_entry_id)
+
+    stamp.user.post_complete_to_remotty if stamp.user.stamp_completed?
+  end
+
+  def post_complete_to_remotty
+    message = <<EOS
+スタンプが全て集まりました！
+:congratulations: おめでとうございます :tada:
+EOS
+    Remotty::Group.new(self.token, id: ENV['REMOTTY_GROUP_ID']).post_entry(message, self.remotty_entry_id)
   end
 end

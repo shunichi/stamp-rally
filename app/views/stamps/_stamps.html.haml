@@ -3,7 +3,7 @@
   .stamps__user-name
     = user.name
   .stamps__stamp-count
-    #{user.stamps.count} / #{User.master_names.size} 個
+    #{user.stamps.count} / #{Stamp.max_count} 個
   .stamps__stamp-table
     - User.master.each do |master|
       .stamps__frame-wrapper
@@ -21,7 +21,7 @@
             .stamps__stamp-wrapper
               = link_to user_stamps_path(user), method: :post, remote: true, class: 'stamps__link' do
                 = fa_icon 'smile-o 5x', class: 'stamps__placeholder'
-    - (User.master_names.size - User.master.count).times.each do
+    - (Stamp.max_count - User.master.count).times.each do
       .stamps__frame-wrapper
         .stamps__master-name
           Unknown

@@ -3,7 +3,8 @@ class StampsController < ApplicationController
 
   def create
     respond_to do |format|
-      if current_user.sent_stamps.create(user: @user)
+      if stamp = current_user.sent_stamps.create(user: @user)
+        current_user.post_stamp_creation_to_remotty(stamp)
         format.js { render }
       else
         format.js { render :failed }
