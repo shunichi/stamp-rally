@@ -76,7 +76,7 @@ EOS
     message = <<EOS
 [sgStampRally] スタンプが全て集まりました！
 
-:congratulations: おめでとうございます :tada:
+:congratulations: ありがとうございました :tada:
 EOS
     Remotty::Group.new(self.token, id: ENV['REMOTTY_GROUP_ID']).post_entry(message, self.remotty_entry_id)
   end
