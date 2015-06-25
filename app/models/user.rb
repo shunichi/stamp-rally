@@ -14,7 +14,12 @@ class User < ActiveRecord::Base
       if auth[:info]
         user.name = auth[:info][:name].presence || auth[:info][:nickname].presence || auth[:extra][:raw_info][:login]
       end
+      user.master! if master_name?(user.name)
     end
+  end
+
+  def self.master_name?(name)
+    ENV['MASTER_NAMES'].split(',').map(&:strip).member?(name)
   end
 
   def stamp_by(master)
