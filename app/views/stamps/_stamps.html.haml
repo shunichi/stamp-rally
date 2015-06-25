@@ -7,7 +7,7 @@
     #{user.stamps.count} / #{Stamp.max_count}
     %span.stamps__stamp-count-unit 個
   .stamps__stamp-table
-    - User.master.each do |master|
+    - User.master.order(created_at: :asc).each do |master|
       .stamps__frame-wrapper
         .stamps__master-name{title: master.name}
           = master.name
