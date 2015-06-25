@@ -18,8 +18,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.master_names
+    ENV['MASTER_NAMES'].split(',').map(&:strip)
+  end
+
   def self.master_name?(name)
-    ENV['MASTER_NAMES'].split(',').map(&:strip).member?(name)
+    master_names.member?(name)
   end
 
   def stamp_by(master)
