@@ -1,0 +1,5 @@
+- if current_user.rally_started_at
+  = render 'stamps/stamps', user: current_user
+- else
+  .text-center
+    = link_to 'スタンプラリーを開始', start_rally_users_path, method: :patch, class: 'btn btn-lg btn-primary'

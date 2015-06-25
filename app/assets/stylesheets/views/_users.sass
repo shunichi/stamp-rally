@@ -5,17 +5,25 @@
   display: block
   &:hover
     text-decoration: none
+    background: #dddddd
+
+.users__user-panel
+  display: table
 
 .users__user-icon
-  display: inline-block
+  display: table-cell
   vertical-align: middle
-  width: 30px
-  height: 30px
+  float: left
+  width: 60px
+  height: 60px
   border-radius: 50%
 
-.users__user-name
-  display: inline-block
+.users__info
+  display: table-cell
   vertical-align: middle
+  padding-left: 10px
+
+.users__user-name
   font-size: 20px
   color: #333333
 

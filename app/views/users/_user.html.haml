@@ -1,11 +1,13 @@
 .users__user
   = link_to user, class: 'users__user-link' do
-    = image_tag user.icon_url, class: 'users__user-icon'
-    .users__user-name
-      = user.name
-  .users__stamp-count
-    スタンプ数: #{user.stamps.count} / #{Stamp.max_count}
-    %span.users__stamp-count-unit 個
-    %span.users__stamp-pressed
-    - if current_user.master? && user.stamp_by(current_user)
-      すでにスタンプを押しています
+    .users__user-panel
+      = image_tag user.icon_url, class: 'users__user-icon'
+      .users__info
+        .users__user-name
+          = user.name
+        .users__stamp-count
+          #{user.stamps.count} / #{Stamp.max_count}
+          %span.users__stamp-count-unit 個
+          %span.users__stamp-pressed
+            - if current_user.master? && user.stamp_by(current_user)
+              すでにスタンプを押しています

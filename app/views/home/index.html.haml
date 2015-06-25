@@ -1,11 +1,8 @@
 - if user_signed_in?
   - if current_user.trainee?
-    - if current_user.rally_started_at
-      = render 'stamps/stamps', user: current_user
-    - else
-      .text-center
-        = link_to 'スタンプラリーを開始', start_rally_users_path, method: :patch, class: 'btn btn-lg btn-primary'
-  = render 'users/users'
+    = render 'home/trainee_home'
+  - else
+    = render 'users/users'
 - else
   %h1.page-header sgStampRally
   .text-center

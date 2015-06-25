@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     post '/debug/signin' => 'sessions#debug_signin', as: :debug_signin
   end
 
-  resources :users, only: %i(show) do
+  resources :users, only: %i(index show) do
     patch 'start_rally', on: :collection
     resources :stamps, only: %i(create destroy)
   end
