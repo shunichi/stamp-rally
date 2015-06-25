@@ -62,7 +62,7 @@ EOS
     message = <<EOS
 #{self.name} がスタンプを押しました。
 
-スタンプが#{stamp.user.stamps.count}/#(Stamp.max_count)個集まりました。
+スタンプが#{stamp.user.stamps.count}/#{Stamp.max_count}個集まりました。
 EOS
     Remotty::Group.new(self.token, id: ENV['REMOTTY_GROUP_ID']).post_entry(message, stamp.user.remotty_entry_id)
 
