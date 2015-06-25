@@ -14,6 +14,12 @@ class SessionsController < ApplicationController
     redirect_to root_url, :notice => 'Signed in!'
   end
 
+  def debug_signin
+    reset_session
+    session[:user_id] = params[:user_id]
+    redirect_to root_url, notice: 'ログインしました(デバッグ)'
+  end
+
   def destroy
     reset_session
     redirect_to root_url, :notice => 'Signed out!'

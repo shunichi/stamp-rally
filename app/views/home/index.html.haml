@@ -1,2 +1,6 @@
 - if user_signed_in?
-  Signed in as #{current_user.name}.
+  - if current_user.trainee?
+    = render 'stamps/stamps', user: current_user
+  = render 'users/users'
+- elsif Rails.env.development?
+  = render 'home/debug_login'

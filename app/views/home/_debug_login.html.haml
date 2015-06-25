@@ -1,0 +1,3 @@
+- User.all.each do |user|
+  .debug-login-user
+    = link_to "#{user.name} としてログイン", debug_signin_path(user_id: user.id), method: :post

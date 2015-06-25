@@ -14,6 +14,7 @@ group :development, :test do
   gem 'dotenv-rails'
 end
 gem 'bootstrap-sass'
+gem 'font-awesome-rails'
 gem 'haml-rails'
 gem 'omniauth'
 gem 'omniauth-github'

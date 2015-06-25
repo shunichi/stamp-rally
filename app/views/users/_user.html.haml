@@ -1,0 +1,9 @@
+.users__user
+  = link_to user.name, user, class: 'users__user-name'
+  .users__stamp-count
+    スタンプ数: #{user.stamps.count} / #{User.master.count} 個
+  - if current_user.master?
+    - if user.stamp_by(current_user)
+      すでにスタンプを押しています
+    - else
+      まだスタンプを押していません

@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # 与えたスタンプという意味のいい言葉が思いつかない(given_stamps だともらったスタンプっぽい気がした)
   has_many :sent_stamps, class_name: 'Stamp', foreign_key: 'master_id', dependent: :destroy
 
-  enum user_type: [ :user, :master ]
+  enum user_type: [ :trainee, :master ]
   serialize :auth_hash, JSON
 
   def self.create_with_omniauth(auth)
@@ -17,4 +17,7 @@ class User < ActiveRecord::Base
     end
   end
 
+  def stamp_by(master)
+    stamps.find_by(master: master)
+  end
 end

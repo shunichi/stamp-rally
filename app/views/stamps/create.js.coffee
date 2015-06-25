@@ -1,0 +1,1 @@
+$('.js-stamps').replaceWith('<%= j render 'stamps/stamps', user: @user %>')
