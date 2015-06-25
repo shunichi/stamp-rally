@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625041746) do
+ActiveRecord::Schema.define(version: 20150625053334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20150625041746) do
     t.text     "auth_hash",                    null: false
     t.integer  "user_type",        default: 0, null: false
     t.datetime "rally_started_at"
+    t.string   "token"
   end
 
 end
