@@ -11,15 +11,11 @@ class ApplicationController < ActionController::Base
 
   private
     def current_user
-      begin
-        @current_user ||= User.find(session[:user_id]) if session[:user_id]
-      rescue Exception => e
-        nil
-      end
+      @current_user ||= User.find(session[:user_id]) if session[:user_id]
     end
 
     def user_signed_in?
-      return true if current_user
+      current_user.present?
     end
 
     def correct_user?
