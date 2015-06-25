@@ -20,4 +20,15 @@ class User < ActiveRecord::Base
   def stamp_by(master)
     stamps.find_by(master: master)
   end
+
+  def start_rally
+    unless rally_started?
+      self.rally_started_at = Time.current
+      save!
+    end
+  end
+
+  def rally_started?
+    rally_started_at.present?
+  end
 end

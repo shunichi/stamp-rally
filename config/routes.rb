@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: %i(show) do
+    patch 'start_rally', on: :collection
     resources :stamps, only: %i(create destroy)
   end
   root 'home#index'
