@@ -52,7 +52,8 @@ class User < ActiveRecord::Base
 
   def post_rally_start_to_remotty
     message = <<EOS
-#{self.name} がスタンプラリーを開始しました。
+[sgStampRally] #{self.name} がスタンプラリーを開始しました。
+
 仲間に入れてもいいと思ったらスタンプを押してくださいね！
 #{Rails.application.routes.url_helpers.user_url(self)}
 EOS
@@ -62,7 +63,7 @@ EOS
 
   def post_stamp_creation_to_remotty(stamp)
     message = <<EOS
-#{self.name} がスタンプを押しました。
+[sgStampRally] #{self.name} がスタンプを押しました。
 
 スタンプが#{stamp.user.stamps.count}/#{Stamp.max_count}個集まりました。
 EOS
@@ -73,9 +74,19 @@ EOS
 
   def post_complete_to_remotty
     message = <<EOS
-スタンプが全て集まりました！
+[sgStampRally] スタンプが全て集まりました！
+
 :congratulations: おめでとうございます :tada:
 EOS
     Remotty::Group.new(self.token, id: ENV['REMOTTY_GROUP_ID']).post_entry(message, self.remotty_entry_id)
+  end
+
+  def post_stamp_destory_to_remotty(stamp)
+    message = <<EOS
+[sgStampRally] スタンプが削除されました。
+
+スタンプは#{stamp.user.stamps.count}/#{Stamp.max_count}個残っています。
+EOS
+    Remotty::Group.new(self.token, id: ENV['REMOTTY_GROUP_ID']).post_entry(message, stamp.user.remotty_entry_id)
   end
 end
