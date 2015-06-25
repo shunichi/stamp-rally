@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   enum user_type: [ :trainee, :master ]
   serialize :auth_hash, JSON
 
+  scope :doing_rally, -> { where.not(rally_started_at: nil) }
+
   def self.create_with_omniauth(auth)
     create! do |user|
       user.provider = auth[:provider]
