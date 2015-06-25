@@ -6,6 +6,10 @@
       .text-center
         = link_to 'スタンプラリーを開始', start_rally_users_path, method: :patch, class: 'btn btn-lg btn-primary'
   = render 'users/users'
+- else
+  %h1.page-header sgStampRally
+  .text-center
+    = link_to 'Remottyアカウントでログイン', signin_path, class: 'btn btn-lg btn-primary'
 
 - if !user_signed_in? && Rails.env.development?
   = render 'home/debug_login'
