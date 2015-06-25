@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
       user.uid = auth[:uid]
       user.auth_hash = auth
       user.token = auth[:credentials][:token]
-      user.icon_url = ENV['OMNIAUTH_SITE'] + auth[:info][:icon_url]
+      user.icon_url = ENV['OMNIAUTH_SITE'] + (auth[:info][:icon_url] || '/noImage.jpg')
       if auth[:info]
         user.name = auth[:info][:name].presence || auth[:info][:nickname].presence || auth[:extra][:raw_info][:login]
       end
