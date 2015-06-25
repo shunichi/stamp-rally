@@ -1,7 +1,23 @@
 .stamps
 
+.stamps__user-icon
+  width: 60px
+  height: 60px
+  border-radius: 50%
+  vertical-align: middle
+
 .stamps__user-name
-  font-size: 20px
+  font-size: 50px
+  display: inline-block
+  margin-left: 8px
+  vertical-align: middle
+
+.stamps__stamp-count
+  font-size: 40px
+  color: #333333
+
+.stamps__stamp-count-unit
+  font-size: 16px
 
 .stamps__stamp-table
 
@@ -20,9 +36,7 @@
   width: 80px
   height: 80px
   border: 2px solid #BBBBBB
-  margin: 0 8px
-  //-webkit-border-radius: 4px
-  //-moz-border-radius: 4px
+  margin-right: 8px
   border-radius: 4px
   &.is-mine:hover
     .stamps__destroy-link

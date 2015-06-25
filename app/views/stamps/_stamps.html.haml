@@ -1,9 +1,11 @@
 - stamp_master_ids = user.stamps.pluck(:master_id)
 .stamps.js-stamps
+  = image_tag user.icon_url, class: 'stamps__user-icon'
   .stamps__user-name
     = user.name
   .stamps__stamp-count
-    #{user.stamps.count} / #{Stamp.max_count} 個
+    #{user.stamps.count} / #{Stamp.max_count}
+    %span.stamps__stamp-count-unit 個
   .stamps__stamp-table
     - User.master.each do |master|
       .stamps__frame-wrapper
