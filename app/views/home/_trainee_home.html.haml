@@ -1,5 +1,6 @@
-- if current_user.rally_started_at
+- if current_user.rally_started?
   = render 'stamps/stamps', user: current_user
 - else
   .text-center
     = link_to 'スタンプラリーを開始', start_rally_users_path, method: :patch, class: 'btn btn-lg btn-primary'
+    .small.text-muted スタンプラリーを開始しなくても、参加者の状況を見ることは可能です
