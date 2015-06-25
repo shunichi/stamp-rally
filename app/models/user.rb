@@ -30,8 +30,8 @@ class User < ActiveRecord::Base
     master_names.member?(name)
   end
 
-  def stamp_by(master)
-    stamps.find_by(master: master)
+  def has_stamp_by?(master)
+    stamps.find_by(master: master).present?
   end
 
   def stamp_completed?
