@@ -1,50 +1,22 @@
 Stamp Rally
 ================
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
-This application was generated with the [rails_apps_composer](https://github.com/RailsApps/rails_apps_composer) gem
-provided by the [RailsApps Project](http://railsapps.github.io/).
-
-Rails Composer is open source and supported by subscribers. Please join RailsApps to support development of Rails Composer.
-
-Problems? Issues?
------------
-
-Need help? Ask on Stack Overflow with the tag 'railsapps.'
-
-Your application contains diagnostics in the README file. Please provide a copy of the README file when reporting any issues.
-
-If the application doesn't work as expected, please [report an issue](https://github.com/RailsApps/rails_apps_composer/issues)
-and include the diagnostics.
-
-Ruby on Rails
--------------
-
-This application requires:
-
-- Ruby 2.2.2
-- Rails 4.2.2
-
-Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.html).
-
 Getting Started
 ---------------
 
-Documentation and Support
--------------------------
+```
+$ cp .env.sample .env
+$ cp config/database.yml.sample config/database.yml
+```
 
-Issues
--------------
+### .env
 
-Similar Projects
-----------------
+```
+OMNIAUTH_PROVIDER_KEY=YOUR-KEY # remotty app key
+OMNIAUTH_PROVIDER_SECRET=YOUR-SECRET # remotty app secret
+OMNIAUTH_SITE=http://remotty.dev # remottyのURL
+HOST_URL=http://stamp-rally.dev # アプリのURL)
+REMOTTY_GROUP_ID=15 # remotty連携の投稿先グループID
+MASTER_NAMES=wancha,chee,nori  # スタンプを押す人の名前(remotty での名前)
+```
 
-Contributing
-------------
-
-Credits
--------
-
-License
--------
