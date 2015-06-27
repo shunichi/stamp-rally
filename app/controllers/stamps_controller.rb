@@ -3,8 +3,9 @@ class StampsController < ApplicationController
   before_action :set_user
 
   def create
+    stamp = current_user.sent_stamps.build(user: @user)
     respond_to do |format|
-      if stamp = current_user.sent_stamps.create(user: @user)
+      if stamp.save
         current_user.post_stamp_creation_to_remotty(stamp)
         format.js { render }
       else
