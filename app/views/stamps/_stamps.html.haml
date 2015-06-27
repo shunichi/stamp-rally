@@ -20,7 +20,7 @@
                   = fa_icon 'trash 5x', class: 'stamps__destroy'
           - elsif master == current_user
             .stamps__stamp-wrapper
-              = link_to user_stamps_path(user), method: :post, remote: true, class: 'stamps__link' do
+              = link_to user_stamps_path(user), method: :post, remote: true, data: {confirm: 'スタンプを押してもいいですか？'}, class: 'stamps__link' do
                 = fa_icon 'smile-o 5x', class: 'stamps__placeholder'
     - (User.master_count - User.master.count).times.each do
       .stamps__frame-wrapper
