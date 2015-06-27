@@ -1,4 +1,3 @@
-- stamp_master_ids = user.stamps.pluck(:master_id)
 .stamps.js-stamps
   = image_tag user.icon_url, class: 'stamps__user-icon'
   .stamps__user-name
@@ -12,7 +11,7 @@
         .stamps__master-name{title: master.name}
           = master.name
         .stamps__frame{class: master == current_user ? 'is-mine' : ''}
-          - if stamp_master_ids.include?(master.id)
+          - if user.stamped_by?(master)
             .stamps__stamp-wrapper
               = fa_icon 'smile-o 5x', class: 'stamps__stamp'
             - if master == current_user
