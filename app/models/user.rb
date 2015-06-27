@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
     stamps.count == Stamp.max_count
   end
 
-  def start_rally
+  def start_rally!
     unless rally_started?
       self.rally_started_at = Time.current
       save!

@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def start_rally
-    current_user.start_rally
+    current_user.start_rally!
     redirect_to root_url
   end
 
