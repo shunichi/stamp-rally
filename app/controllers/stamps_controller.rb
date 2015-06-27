@@ -27,5 +27,6 @@ class StampsController < ApplicationController
 
   def set_user
     @user = User.find(params[:user_id])
+    head :bad_request unless @user.trainee?
   end
 end
