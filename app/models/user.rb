@@ -32,12 +32,16 @@ class User < ActiveRecord::Base
     ENV['MASTER_NAMES'].split(',').map(&:strip)
   end
 
+  def self.master_count
+    master_names.size
+  end
+
   def stamped_by?(master)
     stamps.find_by(master: master).present?
   end
 
   def stamp_completed?
-    stamps.count == Stamp.max_count
+    stamps.count == User.master_count
   end
 
   def start_rally!
@@ -64,13 +68,13 @@ class User < ActiveRecord::Base
   end
 
   def post_stamp_creation_to_remotty(stamp)
-    message = I18n.t('remotty.messages.stamp_created', name: name, stamp_count: stamp.user.stamps.count, stamp_max: Stamp.max_count)
+    message = I18n.t('remotty.messages.stamp_created', name: name, stamp_count: stamp.user.stamps.count, stamp_max: User.master_count)
     post_to_remotty(message, stamp.user.remotty_entry_id)
     stamp.user.post_stamp_completion_to_remotty if stamp.user.stamp_completed?
   end
 
   def post_stamp_destruction_to_remotty(stamp)
-    message = I18n.t('remotty.messages.stamp_destroyed', name: name, stamp_count: stamp.user.stamps.count, stamp_max: Stamp.max_count)
+    message = I18n.t('remotty.messages.stamp_destroyed', name: name, stamp_count: stamp.user.stamps.count, stamp_max: User.master_count)
     post_to_remotty(message, stamp.user.remotty_entry_id)
   end
 
