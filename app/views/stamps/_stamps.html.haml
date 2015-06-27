@@ -17,7 +17,7 @@
               = fa_icon 'smile-o 5x', class: 'stamps__stamp'
             - if master == current_user
               .stamps__stamp-wrapper
-                = link_to [user, current_user.sent_stamps.find_by(user: user)], method: :delete, remote: true, data: {confirm: 'スタンプを削除してもいいですか？'}, class: 'stamps__destroy-link' do
+                = link_to [user, current_user.sent_stamps.find_by(trainee: user)], method: :delete, remote: true, data: {confirm: 'スタンプを削除してもいいですか？'}, class: 'stamps__destroy-link' do
                   = fa_icon 'trash 5x', class: 'stamps__destroy'
           - elsif master == current_user
             .stamps__stamp-wrapper

@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :stamps, dependent: :destroy
+  has_many :stamps, foreign_key: 'trainee_id', dependent: :destroy
   # 与えたスタンプという意味のいい言葉が思いつかない(given_stamps だともらったスタンプっぽい気がした)
   has_many :sent_stamps, class_name: 'Stamp', foreign_key: 'master_id', dependent: :destroy
 
@@ -68,14 +68,14 @@ class User < ActiveRecord::Base
   end
 
   def post_stamp_creation_to_remotty(stamp)
-    message = I18n.t('remotty.messages.stamp_created', name: name, stamp_count: stamp.user.stamps.count, stamp_max: User.master_count)
-    post_to_remotty(message, stamp.user.remotty_entry_id)
-    stamp.user.post_stamp_completion_to_remotty if stamp.user.stamp_completed?
+    message = I18n.t('remotty.messages.stamp_created', name: name, stamp_count: stamp.trainee.stamps.count, stamp_max: User.master_count)
+    post_to_remotty(message, stamp.trainee.remotty_entry_id)
+    stamp.trainee.post_stamp_completion_to_remotty if stamp.trainee.stamp_completed?
   end
 
   def post_stamp_destruction_to_remotty(stamp)
-    message = I18n.t('remotty.messages.stamp_destroyed', name: name, stamp_count: stamp.user.stamps.count, stamp_max: User.master_count)
-    post_to_remotty(message, stamp.user.remotty_entry_id)
+    message = I18n.t('remotty.messages.stamp_destroyed', name: name, stamp_count: stamp.trainee.stamps.count, stamp_max: User.master_count)
+    post_to_remotty(message, stamp.trainee.remotty_entry_id)
   end
 
   private
