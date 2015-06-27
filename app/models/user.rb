@@ -51,42 +51,29 @@ class User < ActiveRecord::Base
   end
 
   def post_rally_start_to_remotty
-    message = <<EOS
-[sgStampRally] #{self.name} がスタンプラリーを開始しました。
+    message = I18n.t('remotty.messages.rally_started', name: name, url: Rails.application.routes.url_helpers.user_url(self))
+    response = post_to_remotty(message)
+    update(remotty_entry_id: response['entry']['id'])
+  end
 
-仲間に入れてもいいと思ったらスタンプを押してくださいね！
-#{Rails.application.routes.url_helpers.user_url(self)}
-EOS
-    response = Remotty::Group.new(self.token, id: ENV['REMOTTY_GROUP_ID']).post_entry(message)
-    self.update(remotty_entry_id: response['entry']['id'])
+  def post_stamp_completion_to_remotty
+    message = I18n.t('remotty.messages.stamp_completed')
+    post_to_remotty(message, remotty_entry_id)
   end
 
   def post_stamp_creation_to_remotty(stamp)
-    message = <<EOS
-[sgStampRally] #{self.name} がスタンプを押しました。
-
-スタンプが#{stamp.user.stamps.count}/#{Stamp.max_count}個集まりました。
-EOS
-    Remotty::Group.new(self.token, id: ENV['REMOTTY_GROUP_ID']).post_entry(message, stamp.user.remotty_entry_id)
-
-    stamp.user.post_complete_to_remotty if stamp.user.stamp_completed?
+    message = I18n.t('remotty.messages.stamp_created', name: name, stamp_count: stamp.user.stamps.count, stamp_max: Stamp.max_count)
+    post_to_remotty(message, stamp.user.remotty_entry_id)
+    stamp.user.post_stamp_completion_to_remotty if stamp.user.stamp_completed?
   end
 
-  def post_complete_to_remotty
-    message = <<EOS
-[sgStampRally] スタンプが全て集まりました！
-
-:congratulations: ありがとうございました :tada:
-EOS
-    Remotty::Group.new(self.token, id: ENV['REMOTTY_GROUP_ID']).post_entry(message, self.remotty_entry_id)
+  def post_stamp_destruction_to_remotty(stamp)
+    message = I18n.t('remotty.messages.stamp_destroyed', name: name, stamp_count: stamp.user.stamps.count, stamp_max: Stamp.max_count)
+    post_to_remotty(message, stamp.user.remotty_entry_id)
   end
 
-  def post_stamp_destory_to_remotty(stamp)
-    message = <<EOS
-[sgStampRally] スタンプが削除されました。
-
-スタンプは#{stamp.user.stamps.count}/#{Stamp.max_count}個残っています。
-EOS
-    Remotty::Group.new(self.token, id: ENV['REMOTTY_GROUP_ID']).post_entry(message, stamp.user.remotty_entry_id)
+  private
+  def post_to_remotty(message, parent_entry_id = nil)
+    Remotty::Group.new(self.token, id: ENV['REMOTTY_GROUP_ID']).post_entry(message, parent_entry_id)
   end
 end

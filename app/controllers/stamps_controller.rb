@@ -15,7 +15,7 @@ class StampsController < ApplicationController
   def destroy
     stamp = current_user.sent_stamps.find_by!(user: @user)
     stamp.destroy
-    current_user.post_stamp_destory_to_remotty(stamp)
+    current_user.post_stamp_destruction_to_remotty(stamp)
   end
 
   private

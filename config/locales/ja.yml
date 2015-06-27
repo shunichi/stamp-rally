@@ -1,1 +1,20 @@
 ja:
+  remotty:
+    messages:
+      rally_started: |
+        [sgStampRally] %{name} がスタンプラリーを開始しました。
+
+        %{url}
+        仲間に入れてもいいと思ったらスタンプを押してくださいね！
+      stamp_created: |
+        [sgStampRally] %{name} がスタンプを押しました。
+
+        現在スタンプは%{stamp_count}/%{stamp_max}個あります。
+      stamp_destroyed: |
+        [sgStampRally] %{name} がスタンプを削除しました。
+
+        現在スタンプは%{stamp_count}/%{stamp_max}個あります。
+      stamp_completed: |
+        [sgStampRally] スタンプが全て集まりました！
+
+        :congratulations: みなさん、ありがとうございました :tada:
