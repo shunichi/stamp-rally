@@ -3,6 +3,10 @@ class User < ActiveRecord::Base
   # 与えたスタンプという意味のいい言葉が思いつかない(given_stamps だともらったスタンプっぽい気がした)
   has_many :sent_stamps, class_name: 'Stamp', foreign_key: 'master_id', dependent: :destroy
 
+  validates :auth_hash, presence: true
+  validates :user_type, presence: true
+  validates :icon_url, presence: true
+
   enum user_type: [ :trainee, :master ]
   serialize :auth_hash, JSON
 
