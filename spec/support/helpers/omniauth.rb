@@ -2,17 +2,22 @@ module Omniauth
 
   module Mock
     def auth_mock
-      OmniAuth.config.mock_auth[:twitter] = {
-        'provider' => 'twitter',
+      OmniAuth.config.mock_auth[:remotty] = OmniAuth::AuthHash.new({
+        'provider' => 'remotty',
         'uid' => '123545',
-        'user_info' => {
-          'name' => 'mockuser'
+        'info' => {
+          'name' => 'mockuser',
+          'email' => 'mockuser@example.com',
+          'icon_url' => 'https://example.com/uploads/user/images/1/mock.jpg',
+          'participation_id' => 12345,
+          'room_id' => 5,
         },
         'credentials' => {
           'token' => 'mock_token',
-          'secret' => 'mock_secret'
-        }
-      }
+          'expires' => false
+        },
+        'extra' => {}
+      })
     end
   end
 

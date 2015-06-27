@@ -8,6 +8,11 @@ class User < ActiveRecord::Base
 
   scope :doing_rally, -> { where.not(rally_started_at: nil) }
 
+  before_create :set_user_type
+  def set_user_type
+    self.user_type = 'master' if self.class.master_names.member?(name)
+  end
+
   def self.create_with_omniauth(auth)
     create! do |user|
       user.provider = auth[:provider]
@@ -18,16 +23,11 @@ class User < ActiveRecord::Base
       if auth[:info]
         user.name = auth[:info][:name].presence || auth[:info][:nickname].presence || auth[:extra][:raw_info][:login]
       end
-      user.master! if master_name?(user.name)
     end
   end
 
   def self.master_names
     ENV['MASTER_NAMES'].split(',').map(&:strip)
-  end
-
-  def self.master_name?(name)
-    master_names.member?(name)
   end
 
   def stamped_by?(master)
