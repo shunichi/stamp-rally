@@ -58,28 +58,28 @@ class User < ActiveRecord::Base
 
   def post_rally_start_to_remotty
     message = I18n.t('remotty.messages.rally_started', name: name, url: Rails.application.routes.url_helpers.user_url(self))
-    response = post_to_remotty(message)
+    response = remotty_client.post_entry(message)
     update(remotty_entry_id: response['entry']['id'])
   end
 
   def post_stamp_completion_to_remotty
     message = I18n.t('remotty.messages.stamp_completed')
-    post_to_remotty(message, remotty_entry_id)
+    remotty_client.post_entry(message, remotty_entry_id)
   end
 
   def post_stamp_creation_to_remotty(stamp)
     message = I18n.t('remotty.messages.stamp_created', name: name, stamp_count: stamp.trainee.stamps.count, stamp_max: User.master_count)
-    post_to_remotty(message, stamp.trainee.remotty_entry_id)
+    remotty_client.post_entry(message, stamp.trainee.remotty_entry_id)
     stamp.trainee.post_stamp_completion_to_remotty if stamp.trainee.stamp_completed?
   end
 
   def post_stamp_destruction_to_remotty(stamp)
     message = I18n.t('remotty.messages.stamp_destroyed', name: name, stamp_count: stamp.trainee.stamps.count, stamp_max: User.master_count)
-    post_to_remotty(message, stamp.trainee.remotty_entry_id)
+    remotty_client.post_entry(message, stamp.trainee.remotty_entry_id)
   end
 
   private
-  def post_to_remotty(message, parent_entry_id = nil)
-    Remotty::Group.new(self.token, id: ENV['REMOTTY_GROUP_ID']).post_entry(message, parent_entry_id)
+  def remotty_client
+    @remotty_client ||= Remotty::Group.new(self.token, id: ENV['REMOTTY_GROUP_ID'])
   end
 end
