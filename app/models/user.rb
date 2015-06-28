@@ -68,14 +68,16 @@ class User < ActiveRecord::Base
   end
 
   def post_stamp_creation_to_remotty(stamp)
-    message = I18n.t('remotty.messages.stamp_created', name: name, stamp_count: stamp.trainee.stamps.count, stamp_max: User.master_count)
-    remotty_client.post_entry(message, stamp.trainee.remotty_entry_id)
-    stamp.trainee.post_stamp_completion_to_remotty if stamp.trainee.stamp_completed?
+    trainee_user = stamp.trainee
+    message = I18n.t('remotty.messages.stamp_created', name: name, stamp_count: trainee_user.stamps.count, stamp_max: User.master_count)
+    remotty_client.post_entry(message, trainee_user.remotty_entry_id)
+    trainee_user.post_stamp_completion_to_remotty if trainee_user.stamp_completed?
   end
 
   def post_stamp_destruction_to_remotty(stamp)
-    message = I18n.t('remotty.messages.stamp_destroyed', name: name, stamp_count: stamp.trainee.stamps.count, stamp_max: User.master_count)
-    remotty_client.post_entry(message, stamp.trainee.remotty_entry_id)
+    trainee_user = stamp.trainee
+    message = I18n.t('remotty.messages.stamp_destroyed', name: name, stamp_count: trainee_user.stamps.count, stamp_max: User.master_count)
+    remotty_client.post_entry(message, trainee_user.remotty_entry_id)
   end
 
   private
