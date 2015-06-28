@@ -1,11 +1,11 @@
 FactoryGirl.define do
   factory :user do
-    name 'testuser'
+    sequence(:name) {|n| "testuser#{n}" }
     provider 'remotty'
-    uid '12345'
+    sequence :uid
     token 'token'
     icon_url 'http://example.com/uploads/user/images/12345/testuser.jpg'
-    auth_hash OmniAuth::AuthHash.new({'uid' => '12345'})
+    auth_hash { OmniAuth::AuthHash.new({'uid' => uid}) }
 
     factory :master do
       name 'master1' # .env.test の MASTER_NAMES に含まれる
