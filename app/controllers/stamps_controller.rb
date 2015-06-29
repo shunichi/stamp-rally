@@ -1,5 +1,5 @@
 class StampsController < ApplicationController
-  before_action :master_user
+  before_action :authenticate_master_user!
   before_action :set_user
 
   def create
@@ -21,7 +21,7 @@ class StampsController < ApplicationController
   end
 
   private
-  def master_user
+  def authenticate_master_user!
     head :forbidden unless current_user.master?
   end
 
