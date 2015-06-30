@@ -1,5 +1,7 @@
 describe Stamp do
   describe 'validation' do
+    set_envs_around(MASTER_NAMES: 'master1,master2,master3')
+
     let(:master1) { create(:master, name: 'master1') }
     let(:master2) { create(:master, name: 'master2') }
     let(:trainee1) { create(:user) }

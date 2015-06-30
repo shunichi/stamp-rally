@@ -1,7 +1,8 @@
 describe User do
   describe '#user_type' do
+    set_envs_around(MASTER_NAMES: 'master1,master2,master3')
+
     it 'ENV["MASTER_NAMES"] に含まれる名前の場合 master になる' do
-      # master1, master2, master3 は .env.test の MASTER_NAMES に含まれる
       %w(master1 master2 master3).each do |name|
         expect(create(:user, name: name).user_type).to eq 'master'
       end
