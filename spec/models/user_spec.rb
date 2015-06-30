@@ -1,6 +1,6 @@
 describe User do
   describe '#user_type' do
-    set_envs_around(MASTER_NAMES: 'master1,master2,master3')
+    around_with_envs(MASTER_NAMES: 'master1,master2,master3')
 
     it 'ENV["MASTER_NAMES"] に含まれる名前の場合 master になる' do
       %w(master1 master2 master3).each do |name|

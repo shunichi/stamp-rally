@@ -1,6 +1,6 @@
 module EnvHelper
   module ExampleMethods
-    def set_envs(envvars)
+    def with_envs(envvars)
       envvars = envvars.stringify_keys
       prev_envs = envvars.keys.map{|k| [k, ENV[k]] }.to_h
       envvars.each{|k,v| ENV[k] = v}
@@ -10,9 +10,9 @@ module EnvHelper
   end
 
   module Macros
-    def set_envs_around(envvars)
+    def around_with_envs(envvars)
       around(:each) do |example|
-        set_envs(envvars, &example)
+        with_envs(envvars, &example)
       end
     end
   end
