@@ -6,7 +6,7 @@
         .users__user-name
           = user.name
         .users__stamp-count
-          #{user.stamps.count} / #{Stamp.max_count}
+          #{user.stamps.count} / #{User.master_count}
           %span.users__stamp-count-unit 個
           - if current_user.master? && user.stamped_by?(current_user)
             %span.users__stamp-pressed

@@ -11,30 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625064554) do
+ActiveRecord::Schema.define(version: 20150627181739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "stamps", force: :cascade do |t|
-    t.integer  "user_id",    null: false
+    t.integer  "trainee_id", null: false
     t.integer  "master_id",  null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "stamps", ["user_id", "master_id"], name: "index_stamps_on_user_id_and_master_id", unique: true, using: :btree
+  add_index "stamps", ["trainee_id", "master_id"], name: "index_stamps_on_trainee_id_and_master_id", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "provider"
-    t.string   "uid"
+    t.string   "name",                         null: false
+    t.string   "provider",                     null: false
+    t.string   "uid",                          null: false
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.text     "auth_hash",                    null: false
     t.integer  "user_type",        default: 0, null: false
     t.datetime "rally_started_at"
-    t.string   "token"
+    t.string   "token",                        null: false
     t.integer  "remotty_entry_id"
     t.string   "icon_url",                     null: false
   end

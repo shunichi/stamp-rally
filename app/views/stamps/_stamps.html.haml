@@ -1,10 +1,9 @@
-- stamp_master_ids = user.stamps.pluck(:master_id)
 .stamps.js-stamps
   = image_tag user.icon_url, class: 'stamps__user-icon'
   .stamps__user-name
     = user.name
   .stamps__stamp-count
-    #{user.stamps.count} / #{Stamp.max_count}
+    #{user.stamps.count} / #{User.master_count}
     %span.stamps__stamp-count-unit 個
   .stamps__stamp-table
     - User.master.order(created_at: :asc).each do |master|
@@ -12,18 +11,18 @@
         .stamps__master-name{title: master.name}
           = master.name
         .stamps__frame{class: master == current_user ? 'is-mine' : ''}
-          - if stamp_master_ids.include?(master.id)
+          - if user.stamped_by?(master)
             .stamps__stamp-wrapper
               = fa_icon 'smile-o 5x', class: 'stamps__stamp'
             - if master == current_user
               .stamps__stamp-wrapper
-                = link_to [user, current_user.sent_stamps.find_by(user: user)], method: :delete, remote: true, data: {confirm: 'スタンプを削除してもいいですか？'}, class: 'stamps__destroy-link' do
+                = link_to [user, current_user.sent_stamps.find_by(trainee: user)], method: :delete, remote: true, data: {confirm: 'スタンプを削除してもいいですか？'}, class: 'stamps__destroy-link' do
                   = fa_icon 'trash 5x', class: 'stamps__destroy'
           - elsif master == current_user
             .stamps__stamp-wrapper
-              = link_to user_stamps_path(user), method: :post, remote: true, class: 'stamps__link' do
+              = link_to user_stamps_path(user), method: :post, remote: true, data: {confirm: 'スタンプを押してもいいですか？'}, class: 'stamps__link' do
                 = fa_icon 'smile-o 5x', class: 'stamps__placeholder'
-    - (Stamp.max_count - User.master.count).times.each do
+    - (User.master_count - User.master.count).times.each do
       .stamps__frame-wrapper
         .stamps__master-name
           Unknown
