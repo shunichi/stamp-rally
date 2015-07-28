@@ -5,7 +5,6 @@ ja:
         [sgStampRally] %{name} がスタンプラリーを開始しました。
 
         %{url}
-        仲間に入れてもいいと思ったらスタンプを押してくださいね！
       stamp_created: |
         [sgStampRally] %{name} がスタンプを押しました。
 
