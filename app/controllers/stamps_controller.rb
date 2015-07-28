@@ -1,5 +1,5 @@
 class StampsController < ApplicationController
-  before_action :master_user
+  before_action :authenticate_master_user!
   before_action :set_user
 
   def create
@@ -21,12 +21,11 @@ class StampsController < ApplicationController
   end
 
   private
-  def master_user
+  def authenticate_master_user!
     head :forbidden unless current_user.master?
   end
 
   def set_user
-    @user = User.find(params[:user_id])
-    head :bad_request unless @user.trainee?
+    @user = User.trainee.find(params[:user_id])
   end
 end
